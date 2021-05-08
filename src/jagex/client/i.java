@@ -659,7 +659,7 @@ public class i implements ImageProducer, ImageObserver {
 
   }
 
-  public void if(int var1, int var2, int var3) {
+  public void _if (int var1, int var2, int var3) {
     this.rg(var1 - this.jk[var3] / 2, var2 - this.kk[var3] / 2, var3);
   }
 

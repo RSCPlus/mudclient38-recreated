@@ -114,6 +114,15 @@ public class r {
   public static int[] wjb;
   public static int[][] xjb;
   public static int[][] yjb;
+  public static int qkb;
+  public static String[] rkb;
+  public static String[] skb;
+  public static int[] tkb;
+  public static int[] ukb;
+  public static int[] vkb;
+  public static int[] wkb;
+  public static int[][] xkb;
+  public static int[][] ykb;
   public static int zjb;
   public static String[] akb;
   public static int[] bkb;
@@ -124,29 +133,11 @@ public class r {
   public static int[][] gkb;
   public static int[][] hkb;
   public static int[][] ikb;
-  static String[] jkb =
-      new String[] {
-        "attack",
-        "defense",
-        "strength",
-        "hits",
-        "ranged",
-        "prayer",
-        "magic",
-        "cooking",
-        "woodcutting",
-        "fletching",
-        "fishing",
-        "firemaking",
-        "crafting",
-        "smithing",
-        "mining",
-        "herblaw"
-      };
-  public static String[] kkb =
-      new String[] {
-        "attack", "defense", "damage", "hits", "agression", "bravery", "regenerate", "perception"
-      };
+  static String[] jkb = new String[]{
+        "attack", "defense", "strength", "hits", "ranged", "thieving", "influence", "praygood", "prayevil", "goodmagic", "evilmagic",
+        "cooking", "tailoring", "woodcutting", "firemaking", "crafting", "smithing", "mining", "herblaw"
+  };
+  public static String[] kkb = new String[]{"attack", "defense", "damage", "hits", "agression", "bravery", "regenerate", "perception"};
   public static int lkb;
   public static String[] mkb = new String[200];
 
@@ -160,7 +151,8 @@ public class r {
       po(new f("../gamedata/config/boundary.txt"));
       ho(new f("../gamedata/config/roof.txt"));
       ko(new f("../gamedata/config/floor.txt"));
-      wo(new f("../gamedata/config/spells.txt"));
+      wo(new f("../gamedata/config/goodspells.txt"));
+      yo(new f("../gamedata/config/evilspells.txt"));
       qo(new f("../gamedata/config/shop.txt"));
       vo();
     } catch (IOException var1) {
@@ -179,7 +171,8 @@ public class r {
       po(new f(var0, o.mm("boundary.txt", var0)));
       ho(new f(var0, o.mm("roof.txt", var0)));
       ko(new f(var0, o.mm("floor.txt", var0)));
-      wo(new f(var0, o.mm("spells.txt", var0)));
+      wo(new f(var0, o.mm("goodspells.txt", var0)));
+      yo(new f(var0, o.mm("evilspells.txt", var0)));
       qo(new f(var0, o.mm("shop.txt", var0)));
       vo();
     } catch (IOException var2) {
@@ -225,7 +218,7 @@ public class r {
     var0.qb();
     int var1 = var0.vb();
     qjb = var1;
-    System.out.println("Found " + var1 + " skills");
+    System.out.println("Found " + var1 + " good skills");
     rjb = new String[var1];
     sjb = new String[var1];
     tjb = new int[var1];
@@ -255,6 +248,41 @@ public class r {
 
     var0.xb();
   }
+  
+  public static void yo(f var0) throws IOException {
+	    var0.qb();
+	    int var1 = var0.vb();
+	    qkb = var1;
+	    System.out.println("Found " + var1 + " evil skills");
+	    rkb = new String[var1];
+	    skb = new String[var1];
+	    tkb = new int[var1];
+	    vkb = new int[var1];
+	    wkb = new int[var1];
+	    ukb = new int[var1];
+	    xkb = new int[var1][];
+	    ykb = new int[var1][];
+
+	    for (int var2 = 0; var2 < var1; ++var2) {
+	      var0.qb();
+	      rkb[var2] = var0.wb();
+	      tkb[var2] = var0.vb();
+	      skb[var2] = var0.wb();
+	      vkb[var2] = var0.vb();
+	      wkb[var2] = var0.vb();
+	      var0.qb();
+	      int var3 = ukb[var2] = var0.vb();
+	      xkb[var2] = new int[var3];
+	      ykb[var2] = new int[var3];
+
+	      for (int var4 = 0; var4 < var3; ++var4) {
+	        xkb[var2][var4] = go(var0.wb());
+	        ykb[var2][var4] = var0.vb();
+	      }
+	    }
+
+	    var0.xb();
+	  }
 
   public static void so(f var0) throws IOException {
     var0.qb();

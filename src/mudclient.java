@@ -160,7 +160,6 @@ public class mudclient extends e {
   int[] oy;
   int[] py;
   int[] qy;
-  int ry;
   String[] sy;
   String[] ty;
   int uy;
@@ -833,7 +832,7 @@ public class mudclient extends e {
     this.zz.gd(var1, var6, "on how you play the game.", 0, true);
     var6 += 73;
     this.zz.ic(var1, var6, 215, 125);
-    String[] var4 = new String[]{"Adventurer", "Warrior", "Wizard", "Ranger", "Miner"};
+    String[] var4 = new String[]{"Adventurer", "Warrior", "Wizard", "Necromancer", "Ranger"};
     this.lbb = this.zz.ac(var1, var6 + 2, var4, 3, true);
     var6 += 75;
     this.zz.ic(var1, var6 + 21, 215, 60);
@@ -1035,7 +1034,7 @@ public class mudclient extends e {
     this.qt.rk = false;
     this.qt.df();
     if (this.bz == 0) {
-      this.qt.if(256, 95, this.az + 10);
+      this.qt._if(256, 95, this.az + 10);
     }
 
     if (this.bz == 0) {
@@ -2641,20 +2640,19 @@ public class mudclient extends e {
         if (var1 == 243) {
           var4 = 1;
 
-          for (var21 = 0; var21 < 16; ++var21) {
+          for (var21 = 0; var21 < 19; ++var21) {
             this.oy[var21] = o.sm(var3[var4++]);
           }
 
-          for (var6 = 0; var6 < 16; ++var6) {
+          for (var6 = 0; var6 < 19; ++var6) {
             this.py[var6] = o.sm(var3[var4++]);
           }
 
-          this.ry = o.sm(var3[var4++]);
           return;
         }
 
         if (var1 == 242) {
-          for (var4 = 0; var4 < 5; ++var4) {
+          for (var4 = 0; var4 < 6; ++var4) {
             this.qy[var4] = o.sm(var3[1 + var4]);
           }
 
@@ -3412,7 +3410,7 @@ public class mudclient extends e {
           var14 = var1 + 10 * var7 / 100;
         }
 
-        this.qt.if(var14 + var3 / 2, var2 + var4 / 2, this.az + 12);
+        this.qt._if(var14 + var3 / 2, var2 + var4 / 2, this.az + 12);
         this.qt.mg(String.valueOf(var8.rr), var14 + var3 / 2 - 1, var2 + var4 / 2 + 5, 3, 16777215);
       }
     }
@@ -3558,7 +3556,7 @@ public class mudclient extends e {
             var14 = var1 + 10 * var7 / 100;
           }
 
-          this.qt.if(var14 + var3 / 2, var2 + var4 / 2, this.az + 11);
+          this.qt._if(var14 + var3 / 2, var2 + var4 / 2, this.az + 11);
           this.qt.mg(String.valueOf(var8.rr), var14 + var3 / 2 - 1, var2 + var4 / 2 + 5, 3, 16777215);
         }
       }
@@ -4815,8 +4813,10 @@ public class mudclient extends e {
         if (var7 < this.ox) {
           int var8 = this.px[var7];
           if (this.lcb >= 0) {
-            if (r.vjb[this.lcb] == 3) {
-              this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+            int scb = this.lcb & 0xFF;
+            boolean pcb = (this.lcb & 0x100) == 0;
+            if ((pcb && r.vjb[scb] == 3) || (!pcb && r.vkb[scb] == 3)) {
+              this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
               this.lv[this.iv] = "@lre@" + r.vfb[var8][0];
               this.nv[this.iv] = 600;
               this.qv[this.iv] = var7;
@@ -4973,26 +4973,24 @@ public class mudclient extends e {
     this.qt.nf(var2, 36, var3, var4, i.fg(181, 181, 181), 160);
     byte var5 = 48;
     this.qt.ef("Skills", var2 + 5, var5, 3, 16776960);
-    int var8 = var5 + 13;
+    int var8 = var5 + 12;
 
-    for (int var6 = 0; var6 < 8; ++var6) {
-      this.qt.ef(this.sy[var6] + ":@yel@" + this.oy[var6] + "/" + this.py[var6], var2 + 5, var8, 1, 16777215);
-      this.qt.ef(this.sy[var6 + 8] + ":@yel@" + this.oy[var6 + 8] + "/" + this.py[var6 + 8], var2 + var3 / 2 - 8, var8 - 13, 1, 16777215);
-      var8 += 13;
+    for (int var6 = 0; var6 < 10; ++var6) {
+      if (var6 < 9) {
+        this.qt.ef(this.sy[var6] + ":@yel@" + this.oy[var6] + "/" + this.py[var6], var2 + 5, var8, 2, 16777215);
+      }
+      this.qt.ef(this.sy[var6 + 9] + ":@yel@" + this.oy[var6 + 9] + "/" + this.py[var6 + 9], var2 + var3 / 2 - 8, var8 - 12, 2, 16777215);
+      var8 += 12;
     }
+    var8 -= 4;
 
-    this.qt.ef("Quest Points:@yel@" + this.ry, var2 + var3 / 2 - 8, var8 - 13, 1, 16777215);
-    var8 += 8;
     this.qt.ef("Equipment Status", var2 + 5, var8, 3, 16776960);
     var8 += 12;
 
     for (int var7 = 0; var7 < 3; ++var7) {
-      this.qt.ef(this.ty[var7] + ":@yel@" + this.qy[var7], var2 + 5, var8, 1, 16777215);
-      if (var7 < 2) {
-        this.qt.ef(this.ty[var7 + 3] + ":@yel@" + this.qy[var7 + 3], var2 + var3 / 2 + 25, var8, 1, 16777215);
-      }
-
-      var8 += 13;
+      this.qt.ef(this.ty[var7] + ":@yel@" + this.qy[var7], var2 + 5, var8, 2, 16777215);
+      this.qt.ef(this.ty[var7 + 3] + ":@yel@" + this.qy[var7 + 3], var2 + var3 / 2 + 25, var8, 2, 16777215);
+      var8 += 12;
     }
 
   }
@@ -5018,8 +5016,8 @@ public class mudclient extends e {
     this.qt.kg(var2, var3 + 24, var4, 0);
     this.qt.og(var2 + var4 / 2, var3, 24, 0);
     this.qt.kg(var2, var3 + 113, var4, 0);
-    this.qt.mg("Magic", var2 + var4 / 4, var3 + 16, 4, 0);
-    this.qt.mg("Prayers", var2 + var4 / 4 + var4 / 2, var3 + 16, 4, 0);
+    this.qt.mg("Good magic", var2 + var4 / 4, var3 + 16, 4, 0);
+    this.qt.mg("Evil magic", var2 + var4 / 4 + var4 / 2, var3 + 16, 4, 0);
     int var8;
     int var9;
     int var11;
@@ -5040,7 +5038,7 @@ public class mudclient extends e {
           }
         }
 
-        var12 = this.oy[6];
+        var12 = this.oy[9];
         if (r.tjb[var9] > var12) {
           var10 = "@bla@";
         }
@@ -5071,6 +5069,53 @@ public class mudclient extends e {
       }
     }
 
+    if (this.gcb == 1) {
+      this.ecb.kc(this.fcb);
+      var8 = 0;
+
+      int var12;
+      for (var9 = 0; var9 < r.qkb; ++var9) {
+        String var10 = "@yel@";
+
+        for (var11 = 0; var11 < r.ukb[var9]; ++var11) {
+          var12 = r.xkb[var9][var11];
+          if (!this.mk(var12, r.ykb[var9][var11])) {
+            var10 = "@whi@";
+            break;
+          }
+        }
+
+        var12 = this.oy[10];
+        if (r.tkb[var9] > var12) {
+          var10 = "@bla@";
+        }
+
+        this.ecb.ad(this.fcb, var8++, var10 + "Level " + r.tkb[var9] + ": " + r.rkb[var9]);
+      }
+
+      this.ecb.fc();
+      var17 = this.ecb.hc(this.fcb);
+      if (var17 != -1) {
+        this.qt.ef("Level " + r.tkb[var17] + ": " + r.rkb[var17], var2 + 2, var3 + 124, 1, 0);
+        this.qt.ef(r.skb[var17], var2 + 2, var3 + 136, 0, 0);
+
+        for (var11 = 0; var11 < r.ukb[var17]; ++var11) {
+          var12 = r.xkb[var17][var11];
+          this.qt.rg(var2 + 2 + var11 * 44, var3 + 150, this.nw + r.zfb[var12]);
+          int var13 = this.dk(var12);
+          int var14 = r.ykb[var17][var11];
+          String var15 = "@red@";
+          if (this.mk(var12, var14)) {
+            var15 = "@gre@";
+          }
+
+          this.qt.ef(var15 + var13 + "/" + var14, var2 + 2 + var11 * 44, var3 + 150, 1, 16777215);
+        }
+      } else {
+        this.qt.ef("Point at a spell for a description", var2 + 2, var3 + 124, 1, 0);
+      }
+    }
+
     if (var1) {
       var2 = super.mq - (this.qt.sj - 199);
       int var16 = super.nq - 36;
@@ -5089,9 +5134,9 @@ public class mudclient extends e {
         if (this.mx == 1 && this.gcb == 0) {
           var8 = this.ecb.hc(this.fcb);
           if (var8 != -1) {
-            var9 = this.oy[6];
+            var9 = this.oy[9];
             if (r.tjb[var8] > var9) {
-              this.gk("Your magic ability is not high enough for this spell", 3);
+              this.gk("Your good magic ability is not high enough for this spell", 3);
             } else {
               for (var17 = 0; var17 < r.ujb[var8]; ++var17) {
                 var11 = r.xjb[var8][var17];
@@ -5103,7 +5148,32 @@ public class mudclient extends e {
               }
 
               if (var17 == r.ujb[var8]) {
-                this.lcb = var8;
+                this.lcb = var8 + (0 << 8);
+                this.sx = -1;
+                this.mcb = "Cast ";
+              }
+            }
+          }
+        }
+
+        if (this.mx == 1 && this.gcb == 1) {
+          var8 = this.ecb.hc(this.fcb);
+          if (var8 != -1) {
+            var9 = this.oy[10];
+            if (r.tkb[var8] > var9) {
+              this.gk("Your evil magic ability is not high enough for this spell", 3);
+            } else {
+              for (var17 = 0; var17 < r.ukb[var8]; ++var17) {
+                var11 = r.xkb[var8][var17];
+                if (!this.mk(var11, r.ykb[var8][var17])) {
+                  this.gk("You don't have all the reagents you need for this spell", 3);
+                  var17 = -1;
+                  break;
+                }
+              }
+
+              if (var17 == r.ukb[var8]) {
+                this.lcb = var8 + (1 << 8);
                 this.sx = -1;
                 this.mcb = "Cast ";
               }
@@ -5456,8 +5526,10 @@ public class mudclient extends e {
             var11 = this.hx[var10];
             if (!this.ix[var10]) {
               if (this.lcb >= 0) {
-                if (r.vjb[this.lcb] == 4) {
-                  this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+                int scb = this.lcb & 0xFF;
+                boolean pcb = (this.lcb & 0x100) == 0;
+                if ((pcb && r.vjb[scb] == 4) || (!pcb && r.vkb[scb] == 4)) {
+                  this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
                   this.lv[this.iv] = "@cya@" + r.mib[var11][0];
                   this.nv[this.iv] = 300;
                   this.ov[this.iv] = this.ex[var10];
@@ -5510,8 +5582,10 @@ public class mudclient extends e {
             var11 = this.xw[var10];
             if (!this.ax[var10]) {
               if (this.lcb >= 0) {
-                if (r.vjb[this.lcb] == 5) {
-                  this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+                int scb = this.lcb & 0xFF;
+                boolean pcb = (this.lcb & 0x100) == 0;
+                if ((pcb && r.vjb[scb] == 5) || (!pcb && r.vkb[scb] == 5)) {
+                  this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
                   this.lv[this.iv] = "@cya@" + r.bib[var11][0];
                   this.nv[this.iv] = 400;
                   this.ov[this.iv] = this.vw[var10];
@@ -5624,8 +5698,11 @@ public class mudclient extends e {
             }
 
             if (this.lcb >= 0) {
-              if (r.vjb[this.lcb] == 1 || r.vjb[this.lcb] == 2 && var14 == 1 && this.aw.vr == 1) {
-                this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+              int scb = this.lcb & 0xFF;
+              boolean pcb = (this.lcb & 0x100) == 0;
+              if ((pcb && (r.vjb[scb] == 1 || r.vjb[scb] == 2 && var14 == 1 && this.aw.vr == 1))
+                || (!pcb && (r.vkb[scb] == 1 || r.vkb[scb] == 2 && var14 == 1 && this.aw.vr == 1))) {
+                this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
                 this.lv[this.iv] = "@whi@" + this.zv[var10].zq;
                 this.nv[this.iv] = 800;
                 this.ov[this.iv] = this.zv[var10].cr;
@@ -5672,8 +5749,10 @@ public class mudclient extends e {
             }
           } else if (var11 == 2) {
             if (this.lcb >= 0) {
-              if (r.vjb[this.lcb] == 3) {
-                this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+              int scb = this.lcb & 0xFF;
+              boolean pcb = (this.lcb & 0x100) == 0;
+              if ((pcb && r.vjb[scb] == 3) || (!pcb && r.vkb[scb] == 3)) {
+                this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
                 this.lv[this.iv] = "@lre@" + r.vfb[this.qw[var10]][0];
                 this.nv[this.iv] = 200;
                 this.ov[this.iv] = this.ow[var10];
@@ -5750,8 +5829,10 @@ public class mudclient extends e {
             }
 
             if (this.lcb >= 0) {
-              if (r.vjb[this.lcb] == 2) {
-                this.mv[this.iv] = this.mcb + r.rjb[this.lcb] + " on";
+              int scb = this.lcb & 0xFF;
+              boolean pcb = (this.lcb & 0x100) == 0;
+              if ((pcb && r.vjb[scb] == 2) || (!pcb && r.vkb[scb] == 2)) {
+                this.mv[this.iv] = this.mcb + (pcb ? r.rjb[scb] : r.rkb[scb]) + " on";
                 this.lv[this.iv] = "@yel@" + r.pgb[this.hw[var10].er][0];
                 this.nv[this.iv] = 700;
                 this.ov[this.iv] = this.hw[var10].cr;
@@ -5803,7 +5884,9 @@ public class mudclient extends e {
       }
     }
 
-    if (this.lcb >= 0 && r.vjb[this.lcb] <= 1) {
+    int scb = this.lcb & 0xFF;
+    boolean pcb = (this.lcb & 0x100) == 0;
+    if (this.lcb >= 0 && ((pcb && r.vjb[scb] <= 1) || (!pcb && r.vkb[scb] <= 1))) {
       this.mv[this.iv] = this.mcb + "on self";
       this.lv[this.iv] = "";
       this.nv[this.iv] = 1000;
@@ -5813,7 +5896,7 @@ public class mudclient extends e {
 
     if (var1 != -1) {
       if (this.lcb >= 0) {
-        if (r.vjb[this.lcb] == 6) {
+        if ((pcb && r.vjb[scb] == 6) || (!pcb && r.vkb[scb] == 6)) {
           this.mv[this.iv] = this.mcb + "on ground";
           this.lv[this.iv] = "";
           this.nv[this.iv] = 900;
@@ -6341,11 +6424,11 @@ public class mudclient extends e {
     this.ly = new int[256];
     this.my = -1;
     this.ny = -2;
-    this.oy = new int[16];
-    this.py = new int[16];
-    this.qy = new int[5];
-    this.sy = new String[]{"Attack", "Defense", "Strength", "Hits", "Ranged", "Prayer", "Magic", "Cooking", "Woodcutting", "Fletching", "Fishing", "Firemaking", "Crafting", "Smithing", "Mining", "Herblaw"};
-    this.ty = new String[]{"Armour", "WeaponAim", "WeaponPower", "Magic", "Prayer"};
+    this.oy = new int[19];
+    this.py = new int[19];
+    this.qy = new int[6];
+    this.sy = new String[]{"Attack", "Defense", "Strength", "Hits", "Ranged", "Thieving", "Influence", "PrayGood", "PrayEvil", "GoodMagic", "EvilMagic", "Cooking", "Tailoring", "Woodcutting", "Firemaking", "Crafting", "Smithing", "Mining", "Herblaw"};
+    this.ty = new String[]{"Armour", "WeaponAim", "WeaponPower", "Magic", "Prayer", "Hiding"};
     this.vy = new int[500];
     this.wy = false;
     this.yy = new String[5];
