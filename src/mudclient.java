@@ -303,7 +303,7 @@ public class mudclient extends e {
     super.rp = -11;
     e.vc = 500;
     e.uc = false;
-    e.xc = 6;
+    e.xc = 5;
     this.pl();
     this.az = 2000;
     this.zy = this.az + 100;
